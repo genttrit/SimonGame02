@@ -1,0 +1,42 @@
+body{
+  font-family: 'Press Start 2P', cursive;
+  text-align: center;
+  background-color: #191919;
+}
+
+button{
+  width: 150px;
+  height: 150px;
+  margin: 20px 10px;
+  border-radius: 15%;
+}
+
+h1{
+  margin-top: 5%;
+  margin-bottom: 5%;
+  color: white;
+}
+
+.green {
+  background-color: green;
+  float:right;
+}
+
+.red {
+  background-color: red;
+  float: left;
+}
+
+.yellow {
+  background-color: yellow;
+  float:right;
+}
+
+.blue {
+  background-color: blue;
+  float: left;
+}
+
+.flash {
+  background-color: #E2DCC8;
+}
