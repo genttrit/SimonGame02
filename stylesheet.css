@@ -40,3 +40,7 @@ h1{
 .flash {
   background-color: #E2DCC8;
 }
+
+.game-over {
+  background-color: red;
+}

@@ -1,21 +1,34 @@
 let gamePattern = [];
 let userClickedPattern = [];
 let buttonColors = ["red","blue","green", "yellow"];
-let level=0;
+let started = false;
+let level = 0;
+let randomChosenColor;
 
 
 //Adding event listeners
 for(let i=0; i<document.querySelectorAll(".card").length; i++){
     document.querySelectorAll(".card")[i].addEventListener("click", sound);
-    document.querySelectorAll('body')[i].addEventListener("click", starting);
 }
 
-function starting(){ 
-  if(n=0){
-    n=1;
-    document.querySelector("h1").innerHTML = "Level "+ n;
+
+
+
+document.addEventListener('keypress',starting);
+document.addEventListener('click',starting);
+
+function starting(){
+if(started !== true){
+  started = true;
+  nextSequence();
+  document.querySelector("h1").innerHTML = "Level "+ level;
   }
 }
+
+
+
+
+
 
 //Flashing game pattern
   for(let i=0; i<gamePattern.length; i++) {
@@ -26,24 +39,54 @@ function starting(){
 //Check the user response
  function checkAnswer(currentLevel) {
   let x = currentLevel-1;
-  if( gamePattern[x] == userClickedPattern[x])
-  {
-    return 1;
+  let check=true;
+  
+  
+  
+  for(let n=0; n<=x; n++){
+    if(userClickedPattern[n] !== gamePattern[n]) {
+      check=false;
+    }
   }
+  if (check) {setTimeout(function () {
+    nextSequence();
+    }, 1000);
+  }
+  else {
+    soundPlay("wrong");
     
-  else
-  {
-    return 0;
-  }
-  };
+    document.getElementsByTagName("h1")[0].classList.add('game-over');
+    
+    document.querySelector("h1").innerHTML = "Game Over, you reached level: "+ level +"               Refresh to Restart";
+
+    setTimeout(function () {
+      document.getElementsByTagName("h1")[0].classList.remove('game-over');
+    }, 200);
+
+    //document.addEventListener('click',startOver);
+}
+ }
 
 
+function startOver() {
+  level = 0;
+  gamePattern = [];
+  started = false;
+  setTimeout(function () {
+    document.getElementsByTagName("h1")[0].classList.remove('game-over');
+  }, 200);
+}
 
 //Audio feature, userArray and buttonAnimation
 function sound() {
+  if(started == true){
   userClickedPattern.push(this.id);
   soundPlay(this.id);
   buttonAnimation(this.id);
+  if(userClickedPattern.length == gamePattern.length){
+    checkAnswer(userClickedPattern.length);
+  }
+  }
 }
 
 function soundPlay(buttonClicked) {
@@ -78,22 +121,24 @@ function soundPlay(buttonClicked) {
 
 //random color selection
 function nextSequence() {
-  userClickedPattern=[];
-  let randomChosenColor = buttonColors[Math.floor(Math.random()*4)];
+  if(started == true){
+  userClickedPattern=[]; //
+  randomChosenColor = buttonColors[Math.floor(Math.random()*4)];
   buttonAnimation(randomChosenColor);
+  soundPlay(randomChosenColor);
   gamePattern.push(randomChosenColor);
-  n++;
-  document.querySelector("h1").innerHTML = "Level "+ n;
+  level++;
+  document.querySelector("h1").innerHTML = "Level "+ level;
+  buttonAnimation(gamePattern[gamePattern.length-1]);
+}
 }
 
 //Call this function to flash the button 
 function buttonAnimation (btnID) {
+  
   document.getElementById(btnID).classList.add('flash');
   setTimeout(()=>{
     document.getElementById(btnID).classList.remove('flash');
-    document.getElementById(btnID).classList.add(btnID);
   }
-  ,500)
-  
-  
+  ,300)
 }
