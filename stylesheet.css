@@ -44,3 +44,9 @@ h1{
 .game-over {
   background-color: red;
 }
+
+
+#resetButton{
+  visibility:hidden;
+  height: 2rem;
+}

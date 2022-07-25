@@ -6,6 +6,7 @@ let level = 0;
 let randomChosenColor;
 
 
+
 //Adding event listeners
 for(let i=0; i<document.querySelectorAll(".card").length; i++){
     document.querySelectorAll(".card")[i].addEventListener("click", sound);
@@ -17,7 +18,12 @@ for(let i=0; i<document.querySelectorAll(".card").length; i++){
 document.addEventListener('keypress',starting);
 document.addEventListener('click',starting);
 
+document.getElementById("resetButton").addEventListener('click', startOver);
+
+
+
 function starting(){
+  console.log("started: " +started);
 if(started !== true){
   started = true;
   nextSequence();
@@ -63,7 +69,7 @@ if(started !== true){
       document.getElementsByTagName("h1")[0].classList.remove('game-over');
     }, 200);
 
-    //document.addEventListener('click',startOver);
+    document.getElementById("resetButton").style.visibility = "visible";
 }
  }
 
@@ -72,6 +78,7 @@ function startOver() {
   level = 0;
   gamePattern = [];
   started = false;
+  document.getElementById("resetButton").style.visibility = "hidden";
   setTimeout(function () {
     document.getElementsByTagName("h1")[0].classList.remove('game-over');
   }, 200);
